@@ -1,4 +1,5 @@
 # ...existing code...
+from time import timezone
 from django.db import models
 from django.utils.text import slugify
 
@@ -9,10 +10,10 @@ class Post(models.Model):
     )
 
     title = models.CharField(max_length=200)
-    slug = models.SlugField(max_length=200, unique=True, blank=True, null=True)  # permite NULL temporariamente
+    slug = models.SlugField(max_length=200, unique=True, blank=True, null=True)
     body = models.TextField()
     status = models.IntegerField(choices=STATUS_CHOICES, default=0)
-    created_on = models.DateTimeField(auto_now_add=True, null=True)  # permite NULL temporariamente
+    created_on = models.DateTimeField(auto_now_add=True, null=True, default=timezone.now)
 
     def save(self, *args, **kwargs):
         if not self.slug and self.title:
